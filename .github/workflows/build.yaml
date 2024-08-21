@@ -1,0 +1,111 @@
+name: Build
+
+on:
+  workflow_call:
+  push:
+    branches:
+      - master
+
+jobs:
+  windows-x86_64:
+    name: windows x86_64
+    runs-on: windows-latest
+    env:
+      build_toolchain: x86_64-pc-windows-msvc
+      build_executable: tgcall.exe
+      build_package_name: tgcall win-x86_64 (msvc)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ env.build_toolchain }}
+      - name: Build tgcall executable
+        run: cargo build --target=${{ env.build_toolchain }} --release --features "tdlib-rs:download-tdlib"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.build_package_name }}
+          path: target/${{ env.build_toolchain }}/release/${{ env.build_executable }}
+
+  apple-darwin-aarch64:
+    name: apple darwin aarch64
+    runs-on: macos-latest
+    env:
+      build_toolchain: aarch64-apple-darwin
+      build_executable: tgcall
+      build_package_name: tgcall macos-aarch64
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ env.build_toolchain }}
+      - name: Build tgcall executable
+        run: cargo build --target=${{ env.build_toolchain }} --release --features "tdlib-rs:download-tdlib"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.build_package_name }}
+          path: target/${{ env.build_toolchain }}/release/${{ env.build_executable }}
+
+  linux-x86_64:
+    name: linux x86_64
+    runs-on: ubuntu-latest
+    env:
+      build_toolchain: x86_64-unknown-linux-gnu
+      build_executable: tgcall
+      build_package_name: tgcall linux-x86_64 (glibc)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ env.build_toolchain }}
+      - name: Build tgcall executable
+        run: cargo build --target=${{ env.build_toolchain }} --release --features "tdlib-rs:download-tdlib"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.build_package_name }}
+          path: target/${{ env.build_toolchain }}/release/${{ env.build_executable }}
+
+  linux-aarch64:
+    name: linux aarch64
+    runs-on: ubuntu-latest
+    env:
+      build_toolchain: aarch64-unknown-linux-gnu
+      build_executable: tgcall
+      build_package_name: tgcall linux-aarch64 (glibc)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ env.build_toolchain }}    
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install gcc-aarch64-linux-gnu
+      - name: Build tgcall executable
+        run: cargo build --target=${{ env.build_toolchain }} --release --features "tdlib-rs:download-tdlib"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.build_package_name }}
+          path: target/${{ env.build_toolchain }}/release/${{ env.build_executable }}
+
+  linux-riscv64:
+    name: linux riscv64
+    runs-on: ubuntu-latest
+    env:
+      build_toolchain: riscv64gc-unknown-linux-gnu
+      build_executable: tgcall
+      build_package_name: tgcall linux-riscv64 (glibc)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ env.build_toolchain }}
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install gcc-riscv64-linux-gnu
+      - name: Build tgcall executable
+        run: cargo build --target=${{ env.build_toolchain }} --release --features "tdlib-rs:download-tdlib"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.build_package_name }}
+          path: target/${{ env.build_toolchain }}/release/${{ env.build_executable }}
