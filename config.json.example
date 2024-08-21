@@ -13,5 +13,5 @@
     "db_path": "./data/db/",
     "files_path": "./data/files/",
     "enc_key": "somenckey",
-    "access_key": "123
+    "access_key": "123"
 }
