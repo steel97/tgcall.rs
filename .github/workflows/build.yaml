@@ -79,7 +79,7 @@ jobs:
           cargo build --target=${{ env.build_toolchain }} --release
           mkdir target/${{ env.build_toolchain }}/release/tgcall
           cp tdlibs/linux/x86_64/tdlib
-          cp tdlibs/linux/x86_64/tdlib/*.dylib target/${{ env.build_toolchain }}/release/tgcall
+          cp tdlibs/linux/x86_64/tdlib/*.so target/${{ env.build_toolchain }}/release/tgcall
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.build_package_name }}
