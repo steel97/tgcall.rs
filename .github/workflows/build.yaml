@@ -53,7 +53,7 @@ jobs:
           cargo build --target=${{ env.build_toolchain }} --release
           mkdir target/${{ env.build_toolchain }}/release/tgcall-bundle
           cp target/${{ env.build_toolchain }}/release/${{ env.build_executable }} target/${{ env.build_toolchain }}/release/tgcall-bundle/${{ env.build_executable }}
-          cp tdlibs/macos/arm64/tdlib/lib/*.dylib target/${{ env.build_toolchain }}/release/tgcall-bundle
+          cp tdlibs/macos/arm64/tdlib/lib/*.dylib* target/${{ env.build_toolchain }}/release/tgcall-bundle
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.build_package_name }}
@@ -79,7 +79,7 @@ jobs:
           cargo build --target=${{ env.build_toolchain }} --release
           mkdir target/${{ env.build_toolchain }}/release/tgcall-bundle
           cp target/${{ env.build_toolchain }}/release/${{ env.build_executable }} target/${{ env.build_toolchain }}/release/tgcall-bundle/${{ env.build_executable }}
-          cp tdlibs/linux/x86_64/tdlib/lib/*.so target/${{ env.build_toolchain }}/release/tgcall-bundle
+          cp tdlibs/linux/x86_64/tdlib/lib/*.so* target/${{ env.build_toolchain }}/release/tgcall-bundle
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.build_package_name }}
