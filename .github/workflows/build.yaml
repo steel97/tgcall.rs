@@ -28,7 +28,7 @@ jobs:
           mkdir target/${{ env.build_toolchain }}/release/tgcall-bundle
           copy target/${{ env.build_toolchain }}/release/${{ env.build_executable }} target/${{ env.build_toolchain }}/release/tgcall-bundle
           copy tdlibs/windows/x86_64/tdlib/bin/*.dll target/${{ env.build_toolchain }}/release/tgcall-bundle
-          copy config.json.example target/${{ env.build_toolchain }}/release/tgcall-bundle
+          copy config.json.example target/${{ env.build_toolchain }}/release/tgcall-bundle/config.json
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.build_package_name }}
