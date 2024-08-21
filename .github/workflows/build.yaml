@@ -58,7 +58,7 @@ jobs:
         with:
           targets: ${{ env.build_toolchain }}
       - name: Build tgcall executable
-        run: cargo build --target=${{ env.build_toolchain }} --release --features "download-tdlib"
+        run: cargo build --target=${{ env.build_toolchain }} --release --features "tdlib-rs/download-tdlib"
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.build_package_name }}
