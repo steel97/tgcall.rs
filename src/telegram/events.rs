@@ -99,14 +99,6 @@ impl Handlers for Events {
             tdlib_rs::enums::Update::AuthorizationState(state) => {
                 self.handle_auth(state, client_id).await;
             }
-            tdlib_rs::enums::Update::NewMessage(_) => {} //info!("new message"),
-            tdlib_rs::enums::Update::MessageSendAcknowledged(_) => info!("new message"),
-            tdlib_rs::enums::Update::User(_) => {}
-            tdlib_rs::enums::Update::Option(_) => {
-                //info!("update option");
-                //let _res = tdlib_rs::functions::set_option(opt.name, Some(opt.value), client_id).await;
-                //info!("update option end");
-            }
             tdlib_rs::enums::Update::ConnectionState(state) => match state.state {
                 tdlib_rs::enums::ConnectionState::WaitingForNetwork => {
                     info!(target: "network", "waiting for network")
