@@ -6,6 +6,7 @@ use crate::models::config::Config;
 
 pub trait Functions {
     fn send_code(&self, client_id: i32, code: String) -> impl Future<Output = ()>;
+    fn call(&self, client_id: i32, username: String) -> impl Future<Output = Result<(), ()>>;
 }
 
 pub trait Handlers {
@@ -33,6 +34,42 @@ impl Functions for Events {
                 error!("failed to send auth code: {}, {}", code, message);
             }
             _ => {}
+        }
+    }
+
+    async fn call(&self, client_id: i32, username: String) -> Result<(), ()> {
+        let chat_res = tdlib_rs::functions::search_public_chat(username, client_id).await;
+        match chat_res {
+            Ok(tdlib_rs::enums::Chat::Chat(chat)) => {
+                let user = tdlib_rs::functions::get_user(chat.id, client_id).await;
+                match user {
+                    Ok(tdlib_rs::enums::User::User(usr)) => {
+                        info!("going to call {}", usr.first_name);
+                    }
+                    _ => return Err(()),
+                }
+                let res = tdlib_rs::functions::create_call(
+                    chat.id,
+                    tdlib_rs::types::CallProtocol {
+                        udp_p2p: true,
+                        udp_reflector: true,
+                        min_layer: 121,
+                        max_layer: 121,
+                        library_versions: vec![],
+                    },
+                    false,
+                    client_id,
+                )
+                .await;
+
+                return match res {
+                    Ok(_) => Ok(()),
+                    _ => Err(()),
+                };
+            }
+            _ => {
+                return Err(());
+            }
         }
     }
 }

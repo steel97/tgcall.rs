@@ -1,15 +1,7 @@
 use env_logger::Env;
 use log::info;
 use ntex::web;
-use std::{
-    fs,
-    path::Path,
-    sync::{
-        atomic::{AtomicBool, Ordering},
-        Arc,
-    },
-    time::Duration,
-};
+use std::{fs, path::Path, sync::Arc, time::Duration};
 use tgcall::{
     handlers::{call_handler::call_handler, tgcode_handler::tgcode_handler},
     models::{appstate::AppState, config::Config},
@@ -52,13 +44,11 @@ async fn main() -> std::io::Result<()> {
         config: config.clone(),
     }));
     let events_clone = events.clone();
-    let run_flag = Arc::new(AtomicBool::new(true));
-    let run_flag_clone = run_flag.clone();
 
     let (tx, mut rx) = mpsc::unbounded_channel();
     // update or response listener
     task::spawn(async move {
-        while run_flag_clone.load(Ordering::Acquire) {
+        loop {
             if let Some((update, client_id)) = tdlib_rs::receive() {
                 let _ = tx.send((update, client_id));
             }
@@ -100,14 +90,15 @@ async fn main() -> std::io::Result<()> {
         web::App::new()
             .state(AppState {
                 config: config.clone(),
-                client_id: client_id,
+                client_id,
                 events: events_clone.clone(),
             })
             .wrap(tgcall::middlewares::error_middleware::Error)
             .service(call_handler)
             .service(tgcode_handler)
     })
-    .bind((host.as_str(), port))?
+    .bind((host.as_str(), port))
+    .expect("can't bind to address/port")
     .run()
     .await;
     Ok(())
