@@ -25,13 +25,13 @@ jobs:
         run: |
           $env:LOCAL_TDLIB_PATH="$(Get-Location)/tdlibs/windows/x86_64/tdlib"
           cargo build --target=${{ env.build_toolchain }} --release
-          mkdir target/${{ env.build_toolchain }}/release/tgcall
-          copy target/${{ env.build_toolchain }}/release/${{ env.build_executable }} target/${{ env.build_toolchain }}/release/tgcall/${{ env.build_executable }}
-          xcopy tdlibs/windows/x86_64/tdlib/bin/ target/${{ env.build_toolchain }}/release/tgcall/
+          mkdir target/${{ env.build_toolchain }}/release/tgcall-bundle
+          copy target/${{ env.build_toolchain }}/release/${{ env.build_executable }} target/${{ env.build_toolchain }}/release/tgcall-bundle/${{ env.build_executable }}
+          xcopy tdlibs/windows/x86_64/tdlib/bin/ target/${{ env.build_toolchain }}/release/tgcall-bundle/
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.build_package_name }}
-          path: target/${{ env.build_toolchain }}/release/tgcall
+          path: target/${{ env.build_toolchain }}/release/tgcall-bundle
 
   apple-darwin-aarch64:
     name: apple darwin aarch64
@@ -51,13 +51,13 @@ jobs:
         run: |
           export LOCAL_TDLIB_PATH=$(pwd)/tdlibs/macos/arm64/tdlib
           cargo build --target=${{ env.build_toolchain }} --release
-          mkdir target/${{ env.build_toolchain }}/release/tgcall
-          cp tdlibs/macos/arm64/tdlib
-          cp tdlibs/macos/arm64/tdlib/*.dylib target/${{ env.build_toolchain }}/release/tgcall
+          mkdir target/${{ env.build_toolchain }}/release/tgcall-bundle
+          cp target/${{ env.build_toolchain }}/release/${{ env.build_executable }} target/${{ env.build_toolchain }}/release/tgcall-bundle/${{ env.build_executable }}
+          cp tdlibs/macos/arm64/tdlib/*.dylib target/${{ env.build_toolchain }}/release/tgcall-bundle
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.build_package_name }}
-          path: target/${{ env.build_toolchain }}/release/tgcall
+          path: target/${{ env.build_toolchain }}/release/tgcall-bundle
 
   linux-x86_64:
     name: linux x86_64
@@ -77,10 +77,10 @@ jobs:
         run: |
           export LOCAL_TDLIB_PATH=$(pwd)/tdlibs/linux/x86_64/tdlib
           cargo build --target=${{ env.build_toolchain }} --release
-          mkdir target/${{ env.build_toolchain }}/release/tgcall
-          cp tdlibs/linux/x86_64/tdlib
-          cp tdlibs/linux/x86_64/tdlib/*.so target/${{ env.build_toolchain }}/release/tgcall
+          mkdir target/${{ env.build_toolchain }}/release/tgcall-bundle
+          cp target/${{ env.build_toolchain }}/release/${{ env.build_executable }} target/${{ env.build_toolchain }}/release/tgcall-bundle/${{ env.build_executable }}
+          cp tdlibs/linux/x86_64/tdlib/*.so target/${{ env.build_toolchain }}/release/tgcall-bundle
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.build_package_name }}
-          path: target/${{ env.build_toolchain }}/release/tgcall
+          path: target/${{ env.build_toolchain }}/release/tgcall-bundle
