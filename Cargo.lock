@@ -1343,7 +1343,7 @@ checksum = "4ea8e585ae80806b3a6e1a4e9eab8e1857c9ba1ec72463bfa82f33815597833e"
 
 [[package]]
 name = "tgcall"
-version = "0.1.0"
+version = "0.2.0"
 dependencies = [
  "env_logger",
  "log",

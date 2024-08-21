@@ -47,3 +47,15 @@ jobs:
       - run: |
           rm -rf 'tgcall-linux-x86_64-glibc.zip'
           zip -j -r 'tgcall-linux-x86_64-glibc.zip' './tgcall linux-x86_64 glibc'
+      # upload release
+      - uses: ncipollo/release-action@v1
+        with:
+          commit: 'master'
+          tag: 'v${{ inputs.tag }}'
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+          generateReleaseNotes: true
+          draft: '${{ inputs.draft }}'
+          name: 'deploy.rs ${{ inputs.tag }}'
+          removeArtifacts: true
+          artifacts: '*.zip'
