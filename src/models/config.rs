@@ -7,6 +7,7 @@ pub struct Config {
     pub api_hash: String,
     pub phone: String,
     pub user_agent: Option<TelegramUserAgent>,
+    pub server: Option<ApiServer>,
     pub db_path: String,
     pub files_path: String,
     pub enc_key: String,
@@ -17,6 +18,12 @@ pub struct Config {
 pub struct TelegramUserAgent {
     pub language: String,
     pub device: String,
+}
+
+#[derive(Serialize, Deserialize, Clone)]
+pub struct ApiServer {
+    pub host: String,
+    pub port: u16,
 }
 
 impl Config {

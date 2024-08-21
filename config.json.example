@@ -6,6 +6,10 @@
         "language": "en",
         "device": "Desktop"
     },
+    "server": {
+        "host": "127.0.0.1",
+        "port": 8080
+    },
     "db_path": "./data/db/",
     "files_path": "./data/files/",
     "enc_key": "somenckey",
