@@ -1,0 +1,10 @@
+prefix=D:/a/tdlib-rs/tdlib-rs/tdlib
+
+Name: tdcore
+Description: Telegram Library - Core
+Version: 1.8.29
+
+CFlags: -I"${prefix}/include"
+Libs: -L"${prefix}/lib" -ltdcore
+Requires.private: tdapi tdactor tdutils tdnet tddb
+Libs.private: -l"D:/a/tdlib-rs/tdlib-rs/td/vcpkg/installed/x64-windows/lib/libcrypto" -l"D:/a/tdlib-rs/tdlib-rs/td/vcpkg/installed/x64-windows/lib/zlib" -lws2_32 -lMswsock -lCrypt32

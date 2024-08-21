@@ -1,0 +1,9 @@
+prefix=D:/a/tdlib-rs/tdlib-rs/tdlib
+
+Name: tdsqlite
+Description: Telegram Library - SQLite
+Version: 1.8.29
+
+CFlags: -I"${prefix}/include"
+Libs: -L"${prefix}/lib" -ltdsqlite
+Libs.private: -l"D:/a/tdlib-rs/tdlib-rs/td/vcpkg/installed/x64-windows/lib/libcrypto" -l"D:/a/tdlib-rs/tdlib-rs/td/vcpkg/installed/x64-windows/lib/zlib" -lws2_32 -lMswsock -lCrypt32

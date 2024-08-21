@@ -1,0 +1,9 @@
+prefix=/Users/runner/work/tdlib-rs/tdlib-rs/tdlib
+
+Name: tdutils
+Description: Telegram Library - Utils
+Version: 1.8.29
+
+CFlags: -I"${prefix}/include"
+Libs: -L"${prefix}/lib" -ltdutils
+Libs.private: -L"/opt/homebrew/opt/openssl/lib" -l:libcrypto.dylib -L"/Applications/Xcode_15.4.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk/usr/lib" -l:libz.tbd

@@ -20,7 +20,9 @@ jobs:
         with:
           targets: ${{ env.build_toolchain }}
       - name: Build tgcall executable
-        run: cargo build --target=${{ env.build_toolchain }} --release --features "download-tdlib"
+        run: |
+          $env:LOCAL_TDLIB_PATH="$(Get-Location)/tdlibs/windows/x86_64/tdlib"
+          cargo build --target=${{ env.build_toolchain }} --release
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.build_package_name }}
@@ -39,7 +41,9 @@ jobs:
         with:
           targets: ${{ env.build_toolchain }}
       - name: Build tgcall executable
-        run: cargo build --target=${{ env.build_toolchain }} --release --features "download-tdlib"
+        run: |
+          export LOCAL_TDLIB_PATH=$(pwd)/tdlibs/macos/arm64/tdlib
+          cargo build --target=${{ env.build_toolchain }} --release
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.build_package_name }}
@@ -59,8 +63,8 @@ jobs:
           targets: ${{ env.build_toolchain }}
       - name: Build tgcall executable
         run: |
-          rm .cargo/config.toml
-          cargo build --target=${{ env.build_toolchain }} --release --features "tdlib-rs/download-tdlib"
+          export LOCAL_TDLIB_PATH=$(pwd)/tdlibs/linux/x86_64/tdlib
+          cargo build --target=${{ env.build_toolchain }} --release
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.build_package_name }}
