@@ -8,3 +8,11 @@ specify env var path to local binaries: LOCAL_TDLIB_PATH
 
 ## to get rid of rust-analyzer error
 please set LOCAL_TDLIB_PATH to your FULL path with tdlib for example C:/tgcall.rs/tdlibs/windows/x86_64/tdlib
+
+## ubuntu additional requirements
+```
+sudo apt install libc++-dev
+```
+
+## config
+working enc_key string length: 8

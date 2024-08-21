@@ -84,6 +84,7 @@ jobs:
           cp tdlibs/linux/x86_64/tdlib/lib/*.so* target/${{ env.build_toolchain }}/release/tgcall-bundle
           cp run.sh target/${{ env.build_toolchain }}/release/tgcall-bundle/run.sh
           cp config.json.example target/${{ env.build_toolchain }}/release/tgcall-bundle/config.json
+          cp tgcall.service.example target/${{ env.build_toolchain }}/release/tgcall-bundle/tgcall.service
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ env.build_package_name }}
