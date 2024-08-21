@@ -16,6 +16,8 @@ jobs:
       build_package_name: tgcall win-x86_64 (msvc)
     steps:
       - uses: actions/checkout@v4
+        with:
+          lfs: true
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ env.build_toolchain }}
@@ -37,6 +39,8 @@ jobs:
       build_package_name: tgcall macos-aarch64
     steps:
       - uses: actions/checkout@v4
+        with:
+          lfs: true
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ env.build_toolchain }}
@@ -58,6 +62,8 @@ jobs:
       build_package_name: tgcall linux-x86_64 (glibc)
     steps:
       - uses: actions/checkout@v4
+        with:
+          lfs: true
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ env.build_toolchain }}
